@@ -30,3 +30,27 @@ const playlist = [
     initPlaylist();
   }, { once: true }); // Ensures it runs only once
   
+  function playAudio() {
+    const audio = document.getElementById("radioPlayer");
+    audio.play();
+}
+
+function pauseAudio() {
+    const audio = document.getElementById("radioPlayer");
+    audio.pause();
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  displayMediaFileName();
+});
+
+function displayMediaFileName() {
+  const audio = document.getElementById("radioPlayer");
+  const fileNameElement = document.getElementById("mediaFileName");
+
+  // Extract file name from the src attribute
+  let filePath = audio.src;
+  let fileName = filePath.substring(filePath.lastIndexOf("/") + 1); // Get only the file name
+
+  fileNameElement.textContent = fileName; // Set the file name in the span
+}

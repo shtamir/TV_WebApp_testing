@@ -37,10 +37,19 @@
     <audio id="radioPlayer" 
           src="audio/music_1.mp3"
           autoplay
-          controls
           loop>
       Your browser does not support the audio element.
     </audio>
+    <button onclick="document.getElementById('radioPlayer').play()">
+      <img src="images/media-player/play.svg" width=auto height=30px alt="Play">
+    </button>
+    
+    <button onclick="document.getElementById('radioPlayer').pause()">
+      <img src="images/media-player/pause.svg" width=auto height=30px alt="Pause">
+    </button>
+
+    <!-- Display Media File Name -->
+    <span id="mediaFileName"></span>
   </div>
 
   <!-- News breaks -->

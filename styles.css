@@ -24,7 +24,7 @@ body {
   transform: translateX(-50%);
   font-size: 0.1em;
   /*font-weight: bold;*/
-  color: #dad00e;
+  color: #49cf27;
   text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
 }
 
@@ -83,10 +83,39 @@ body {
 }
 
 .music-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  border-radius: 5px;
+
   top: 71%;
   left: 1%;
   width: 18%;
   height: 9%;
+}
+
+.custom-audio-controls {
+  top: 71%;
+  left: 1%;
+  width: 18%;
+  height: 9%;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.custom-audio-controls button {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
 }
 
 
@@ -210,4 +239,11 @@ audio {
 
 .fade-in {
   animation: fadeIn 1s ease-in-out;
+}
+
+#mediaFileName {
+  font-size: 16px;
+  color: rgba(144, 134, 134, 0.759);
+  margin-left: 10px;
+  font-weight: bold;
 }
