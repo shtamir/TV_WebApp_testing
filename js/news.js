@@ -4,7 +4,7 @@
 const newsConfig = {
   feedUrl: 'https://rss.walla.co.il/feed/2',
   maxItems: 20, // Maximum items to fetch
-  displayItems: 7, // Number of items to display at once
+  displayItems: 3, // Number of items to display at once
   cycleIntervalMs: 10000 // Rotation interval (10 seconds)
 };
 
