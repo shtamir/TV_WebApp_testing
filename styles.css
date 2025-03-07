@@ -48,7 +48,7 @@ body {
 /* Position Each Box */
 .time-and-date {
   display: flex;
-  font-size: 36px; 
+  font-size: 30px; 
   justify-content: center;
   align-items: center;
   line-height: 1.4;
@@ -60,7 +60,7 @@ body {
 
 .weather {
   display: flex;
-  font-size: 36px; 
+  font-size: 30px; 
   justify-content: center;
   align-items: center;
   line-height: 1.4;
@@ -132,7 +132,7 @@ body {
   top: 20%;
   right: 1%;
   width: 25%;
-  height: 35%;
+  height: 60%;
   overflow-y: auto;
 }
 
