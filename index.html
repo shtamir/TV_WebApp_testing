@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Yakinton 46</title>
+  <!-- Link to the CSS file we'll create next -->
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <!-- Header / Title -->
+  <div class="header-title">YAKINTON 46</div>
+
+  <!-- Time and date -->
+  <div class="time-and-date" id="timeDateBox"></div>
+
+  <!-- Daily photo with carousel -->
+  <div class="daily-photo">
+    <img id="photoElement" src="images/carousel/pic1.jpeg" alt="Daily Photo">
+  </div>
+
+  <!-- QR Code section -->
+  <div class="contact-info">
+		<p>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="first"><img src="images/qr/WifiQR.svg" width=90% height=auto alt="WiFi QR"></td>
+        <!--<td class="second"><img src="images/qr/CallQR.svg" width=100% height=auto alt="Call QR"></td>-->
+        <td class="third"><img src="images/qr/EmailQR.svg" width=90% height=auto alt="Email QR"></td>
+      </tr>
+    </table>
+		</p>
+  </div>
+
+  <!-- Music player -->
+  <div class="music-info" id="musicInfoBox">
+    <audio id="radioPlayer" 
+          src="audio/music_1.mp3"
+          autoplay
+          controls
+          loop>
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <!-- News breaks -->
+  <div class="news-breaks" id="newsContainer">
+    <div class="loading-indicator">Loading news...</div>
+  </div>
+
+  <!-- Weather -->
+  <div class="weather" id="weatherBox">
+    <div class="loading-indicator">Loading weather...</div>
+  </div>
+
+  <!-- Messages from Google Sheets -->
+  <div class="messages" id="messagesBox">
+    <div class="loading-indicator">Loading messages...</div>
+  </div>
+
+  <!-- Todo list from Google Sheets -->
+  <!-- <div class="todo-list" id="todoListBox">
+    <div class="loading-indicator">Loading todo items...</div>
+  </div> -->
+
+  <!-- Load the separate JavaScript files -->
+  <script src="js/main.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/news.js"></script>
+  <script src="js/data-sync.js"></script>
+  <script src="js/photo-carousel.js"></script>
+  <script src="js/mouse-click.js"></script>
+  <script src="js/radio-player.js"></script>
+</body>
+</html>
