@@ -24,7 +24,7 @@ body {
   transform: translateX(-50%);
   font-size: 0.1em;
   /*font-weight: bold;*/
-  color: #ca3272;
+  color: #dad00e;
   text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
 }
 
@@ -48,7 +48,7 @@ body {
 /* Position Each Box */
 .time-and-date {
   display: flex;
-  font-size: 30px; 
+  font-size: 25px; 
   justify-content: center;
   align-items: center;
   line-height: 1.4;
