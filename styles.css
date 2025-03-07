@@ -157,7 +157,7 @@ body {
 }
 
 .horizontal-list li {
-  max-width: 30ch;
+  max-width: 40ch;
   white-space: normal;
   overflow-wrap: break-word;
   padding: 0 1rem;

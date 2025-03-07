@@ -112,9 +112,9 @@ function renderNewsBatch() {
     li.innerHTML = `
       <small class="date-span">${newsItem.pubDate}</small><br>
       <span class="title-span">${newsItem.title}</span><br>
-      <span class="desc-span">${newsItem.description}</span><br>
-    `;
+      `;
     ul.appendChild(li);
+    // <span class="desc-span">${newsItem.description}</span><br>
   }
 
   // Append to container
