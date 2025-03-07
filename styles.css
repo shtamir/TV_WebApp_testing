@@ -20,7 +20,7 @@ body {
 .header-title {
   position: absolute;
   top: 1px;
-  left: 1%;
+  left: 5%;
   transform: translateX(-50%);
   font-size: 0.1em;
   /*font-weight: bold;*/
