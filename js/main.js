@@ -71,3 +71,8 @@ function showError(elementId, message) {
   // Log to console for debugging
   console.error(`Error in ${elementId}: ${message}`);
 }
+
+// Refresh the page every 30 minutes (adjust as needed)
+setTimeout(() => {
+  location.reload();
+}, 1 * 60 * 1000);  // 1 minutes in milliseconds
