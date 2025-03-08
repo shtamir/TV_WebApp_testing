@@ -97,7 +97,7 @@ const photoSchedule = {
 function getTimeSlot() {
   const now = new Date();
   const hour = now.getHours();
-  
+  console.log(`getTimeSlot(): hour:${hour}, now: ${now}`);
   if (hour >= 5 && hour < 12) return "morning";  // 05:00 - 11:59
   if (hour >= 12 && hour < 18) return "noon";    // 12:00 - 17:59
   return "evening";                              // 18:00 - 04:59
@@ -109,7 +109,7 @@ function getTodayPhotos() {
   const now = new Date();
   const dayName = now.toLocaleString('en-US', { weekday: 'long' });
   const timeSlot = getTimeSlot();
-  
+  console.log(`getTodayPhotos(): timeSlot:${timeSlot}, dayName: ${dayName}`);
   return photoSchedule[dayName]?.[timeSlot] || ["images/default.jpg"];
 }
 
