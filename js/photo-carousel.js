@@ -13,12 +13,110 @@ const photoConfig = {
     "images/carousel/pic4.jpeg",
     "images/carousel/pic5.jpeg"*/
   ],
-  interval: 3000 // Change photo every 10 seconds
+  interval: 10000 // Change photo every 10 seconds
 };
 
-// Variables to track the carousel state
+// Configuration for day-wise and time-wise photo display
+const photoSchedule = {
+  "Sunday": {
+    "morning": ["images/carousel/morning_03.gif", "images/carousel/sunday_01.jpg"],
+    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/sunday_01.jpg"],
+    "evening": ["images/carousel/goodevening_01.jpg"]
+  },
+  "Monday": {
+    "morning": ["images/carousel/morning_04.gif", "images/carousel/morning_01.jpg", "images/carousel/morning_02.jpg"],
+    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg"],
+    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg"]
+  },
+  "Tuesday": {
+    "morning": ["images/carousel/morning_04.gif", "images/carousel/morning_01.jpg", "images/carousel/morning_02.jpg"],
+    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg"],
+    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg"]
+  },
+  "Wednesday": {
+    "morning": ["images/carousel/morning_04.gif", "images/carousel/morning_01.jpg", "images/carousel/morning_02.jpg"],
+    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg"],
+    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg"]
+  },
+  "Thursday": {
+    "morning": ["images/carousel/morning_04.gif", "images/carousel/morning_01.jpg", "images/carousel/morning_02.jpg"],
+    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg"],
+    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg"]
+  },
+  "Friday": {
+    "morning": ["images/carousel/morning_04.gif", "images/carousel/morning_01.jpg", "images/carousel/morning_02.jpg"],
+    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg"],
+    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg", "images/carousel/weekend_01.jpg"]
+  },
+  "Saturday": {
+    "morning": ["images/carousel/morning_04.gif", "images/carousel/morning_01.jpg", "images/carousel/morning_02.jpg", "images/carousel/weekend_01.jpg"],
+    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg", "images/carousel/weekend_01.jpg"],
+    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg", "images/carousel/weekend_01.jpg"]
+  },
+};
+/*
+const photoSchedule = {
+  "Sunday": {
+    "morning": ["images/sun_morning1.jpeg", "images/sun_morning2.jpeg"],
+    "noon": ["images/sun_noon1.jpeg", "images/sun_noon2.jpeg"],
+    "evening": ["images/sun_evening1.jpeg", "images/sun_evening2.jpeg"]
+  },
+  "Monday": {
+    "morning": ["images/mon_morning1.jpeg", "images/mon_morning2.jpeg"],
+    "noon": ["images/mon_noon1.jpeg", "images/mon_noon2.jpeg"],
+    "evening": ["images/mon_evening1.jpeg", "images/mon_evening2.jpeg"]
+  },
+  "Tuesday": {
+    "morning": ["images/tue_morning1.jpeg", "images/tue_morning2.jpeg"],
+    "noon": ["images/tue_noon1.jpeg", "images/tue_noon2.jpeg"],
+    "evening": ["images/tue_evening1.jpeg", "images/tue_evening2.jpeg"]
+  },
+  "Wednesday": {
+    "morning": ["images/wen_morning1.jpeg", "images/wen_morning2.jpeg"],
+    "noon": ["images/wen_noon1.jpeg", "images/wen_noon2.jpeg"],
+    "evening": ["images/wen_evening1.jpeg", "images/wen_evening2.jpeg"]
+  },
+  "Thursday": {
+    "morning": ["images/thu_morning1.jpeg", "images/thu_morning2.jpeg"],
+    "noon": ["images/thu_noon1.jpeg", "images/thu_noon2.jpeg"],
+    "evening": ["images/thu_evening1.jpeg", "images/thu_evening2.jpeg"]
+  },
+  "Friday": {
+    "morning": ["images/fri_morning1.jpeg", "images/fri_morning2.jpeg"],
+    "noon": ["images/fri_noon1.jpeg", "images/fri_noon2.jpeg"],
+    "evening": ["images/fri_evening1.jpeg", "images/fri_evening2.jpeg"]
+  },
+  "Saturday": {
+    "morning": ["images/sat_morning1.jpeg", "images/sat_morning2.jpeg"],
+    "noon": ["images/sat_noon1.jpeg", "images/sat_noon2.jpeg"],
+    "evening": ["images/sat_evening1.jpeg", "images/sat_evening2.jpeg"]
+  },
+};*/
+
+// Function to get the current time slot
+function getTimeSlot() {
+  const now = new Date();
+  const hour = now.getHours();
+  
+  if (hour >= 5 && hour < 12) return "morning";  // 05:00 - 11:59
+  if (hour >= 12 && hour < 18) return "noon";    // 12:00 - 17:59
+  return "evening";                              // 18:00 - 04:59
+}
+
+
+// Function to get today's photo set
+function getTodayPhotos() {
+  const now = new Date();
+  const dayName = now.toLocaleString('en-US', { weekday: 'long' });
+  const timeSlot = getTimeSlot();
+  
+  return photoSchedule[dayName]?.[timeSlot] || ["images/default.jpg"];
+}
+
+
+// Variables for rotation
 let currentPhotoIndex = 0;
-let photoElement = null;
+let photoInterval = null;
 
 // Initialize the photo carousel
 function initPhotoCarousel() {
@@ -29,49 +127,54 @@ function initPhotoCarousel() {
     return;
   }
 
-  // Make sure at least one photo exists
-  if (photoConfig.photos.length === 0) {
-    console.error('No photos configured!');
+  const photos = getTodayPhotos();
+  if (photos.length === 0) {
+    console.error('No photos found for today!');
     return;
   }
 
-  // Preload images
-  preloadImages();
+  // Set initial photo
+  photoElement.src = photos[0];
 
-  // Set the initial photo
-  photoElement.src = photoConfig.photos[currentPhotoIndex];
-
-  // Start the rotation interval
-  setInterval(rotatePhotos, photoConfig.interval);
+  // Start rotation if multiple photos exist
+  if (photos.length > 1) {
+    photoInterval = setInterval(() => rotatePhotos(photos), 15000);
+  }
 }
 
-// Rotate to the next photo with a fade effect
-function rotatePhotos() {
+// Rotate between available photos
+function rotatePhotos(photoList) {
+  const photoElement = document.getElementById('photoElement');
   if (!photoElement) return;
 
+  currentPhotoIndex = (currentPhotoIndex + 1) % photoList.length;
+  
   // Fade out effect
-  photoElement.style.transition = "opacity 1s ease-in-out";
   photoElement.style.opacity = 0;
-
+  
   setTimeout(() => {
-    // Update index and change the image
-    currentPhotoIndex = (currentPhotoIndex + 1) % photoConfig.photos.length;
-    photoElement.src = photoConfig.photos[currentPhotoIndex];
-
-    // Fade in effect
+    photoElement.src = photoList[currentPhotoIndex];
     photoElement.style.opacity = 1;
   }, 1000); // Wait 1 second for fade-out
 }
 
-// Preload images for smoother transitions
+// Preload images for smooth transitions
 function preloadImages() {
-  photoConfig.photos.forEach((src) => {
-    const img = new Image();
-    img.src = src;
+  Object.values(photoSchedule).forEach(day => {
+    Object.values(day).forEach(timeSlot => {
+      timeSlot.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+    });
   });
 }
 
-// Ensure the carousel initializes when the page loads
-document.addEventListener('DOMContentLoaded', () => {
+
+// Initialize when the document is ready
+document.addEventListener('DOMContentLoaded', function() {
+  preloadImages();
   initPhotoCarousel();
 });
+
+// End of photo-carousel.js
