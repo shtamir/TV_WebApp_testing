@@ -14,7 +14,7 @@ function simulateClick(x, y) {
   simulateClick(25, 677);
 
   document.addEventListener("click", function(event) {
-    console.log(`Clicked at X: ${event.clientX}, Y: ${event.clientY}`);
+    //console.log(`Clicked at X: ${event.clientX}, Y: ${event.clientY}`);
   });
 
   /*

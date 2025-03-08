@@ -40,17 +40,27 @@
           loop>
       Your browser does not support the audio element.
     </audio>
-    <button onclick="document.getElementById('radioPlayer').play()">
-      <img src="images/media-player/play.svg" width=auto height=30px alt="Play">
+    
+    <button id="prevBtn" onclick="playPreviousTrack()">
+      <img src="images/media-player/prev.svg" width=auto height=25px alt="Prev">
+    </button>
+
+    <button id="playBtn" onclick="playAudio()">
+      <img src="images/media-player/play.svg" width=auto height=25px alt="Play">
     </button>
     
-    <button onclick="document.getElementById('radioPlayer').pause()">
-      <img src="images/media-player/pause.svg" width=auto height=30px alt="Pause">
+    <button id="pauseBtn" onclick="pauseAudio()">
+      <img src="images/media-player/pause.svg" width=auto height=25px alt="Pause">
+    </button>
+
+    <button id="nextBtn" onclick="playNextTrack()">
+      <img src="images/media-player/next.svg" width=auto height=25px alt="Next">
     </button>
 
     <!-- Display Media File Name -->
     <span id="mediaFileName"></span>
   </div>
+
 
   <!-- News breaks -->
   <div class="news-breaks" id="newsContainer">
