@@ -3,14 +3,15 @@
 // Configuration for photo carousel
 const photoConfig = {
   photos: [
-    "images/carousel/pic1.jpeg",
+    "images/carousel/pic3.jpg"
+    /*"images/carousel/pic1.jpeg",
     "images/carousel/pic2.jpeg",
     "images/carousel/pic2.jpg",
     "images/carousel/pic3.gif",
     "images/carousel/pic3.jpeg",
     "images/carousel/pic4.gif",
     "images/carousel/pic4.jpeg",
-    "images/carousel/pic5.jpeg"
+    "images/carousel/pic5.jpeg"*/
   ],
   interval: 3000 // Change photo every 10 seconds
 };

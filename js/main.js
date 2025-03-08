@@ -73,6 +73,26 @@ function showError(elementId, message) {
 }
 
 // Refresh the page every 30 minutes (adjust as needed)
+/*
 setTimeout(() => {
   location.reload();
 }, 1 * 60 * 1000);  // 1 minutes in milliseconds
+*/
+
+function checkForRemoteRefresh() {
+  fetch("refresh_trigger.txt") // URL of your remote refresh trigger
+      .then(response => response.text())
+      .then(data => {
+          if (data.trim() === "refresh") {
+              console.log("Remote refresh triggered!");
+              location.reload(); // Reload the page
+          }
+          else {
+            console.log(`No refresh triggered..`);
+          }
+      })
+      .catch(error => console.error("Error checking refresh status:", error));
+}
+
+// Check for refresh every 60 seconds (adjust as needed)
+setInterval(checkForRemoteRefresh, 60000);
