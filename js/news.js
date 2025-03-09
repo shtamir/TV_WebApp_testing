@@ -15,6 +15,8 @@ let newsInterval = null;
 
 // Fetch news from RSS feed
 function fetchNewsBreaks() {
+  
+  console.log("Fetching news at", new Date().toLocaleTimeString());
   // Show loading state
   document.getElementById('newsContainer').innerHTML = '<div class="loading-indicator">Loading news...</div>';
   

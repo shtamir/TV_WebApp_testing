@@ -60,6 +60,12 @@ function setupRefreshTimers() {
   // Refresh messages and todo lists every 5 minutes
   setInterval(fetchMessagesFromGoogleSheet, 5 * 60 * 1000);
   //setInterval(fetchTodoListFromGoogleSheet, 5 * 60 * 1000);
+
+  // Refresh photo carousel every 10 minutes
+  setInterval(initPhotoCarousel, 10 * 60 * 1000); // Refresh every 10 minutes
+
+  // Check for refresh every 60 seconds (adjust as needed)
+  setInterval(checkForRemoteRefresh, 60000);
 }
 
 // Helper function to show error states
@@ -72,12 +78,11 @@ function showError(elementId, message) {
   console.error(`Error in ${elementId}: ${message}`);
 }
 
-// Refresh the page every 30 minutes (adjust as needed)
-/*
+// Refresh the page every 60 minutes (adjust as needed)
 setTimeout(() => {
   location.reload();
-}, 1 * 60 * 1000);  // 1 minutes in milliseconds
-*/
+}, 60 * 60 * 1000);  // 1 hour in milliseconds
+
 
 function checkForRemoteRefresh() {
   fetch("refresh_trigger.txt") // URL of your remote refresh trigger
@@ -93,6 +98,3 @@ function checkForRemoteRefresh() {
       })
       .catch(error => console.error("Error checking refresh status:", error));
 }
-
-// Check for refresh every 60 seconds (adjust as needed)
-setInterval(checkForRemoteRefresh, 60000);

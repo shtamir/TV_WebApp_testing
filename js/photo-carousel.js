@@ -1,20 +1,20 @@
 // photo-carousel.js - Photo carousel functionality for Yakinton 46 application
 
 // Configuration for photo carousel
-const photoConfig = {
+/*const photoConfig = {
   photos: [
     "images/carousel/pic3.jpg"
-    /*"images/carousel/pic1.jpeg",
+    "images/carousel/pic1.jpeg",
     "images/carousel/pic2.jpeg",
     "images/carousel/pic2.jpg",
     "images/carousel/pic3.gif",
     "images/carousel/pic3.jpeg",
     "images/carousel/pic4.gif",
     "images/carousel/pic4.jpeg",
-    "images/carousel/pic5.jpeg"*/
+    "images/carousel/pic5.jpeg"
   ],
   interval: 10000 // Change photo every 10 seconds
-};
+}; */
 
 // Configuration for day-wise and time-wise photo display
 const photoSchedule = {

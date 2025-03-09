@@ -14,6 +14,8 @@ function fetchWeather() {
   const city = weatherConfig.city;
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${weatherConfig.units}&lang=${weatherConfig.lang}`;
   
+  console.log("Fetching Weather at", new Date().toLocaleTimeString());
+
   // Show loading state
   document.getElementById('weatherBox').innerHTML = '<div class="loading-indicator">Loading weather...</div>';
   
