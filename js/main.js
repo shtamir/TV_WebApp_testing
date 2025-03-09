@@ -45,7 +45,7 @@ function loadAllData() {
   fetchWeather();
   fetchNewsBreaks();
   fetchMessagesFromGoogleSheet();
-  fetchTodoListFromGoogleSheet();
+  //fetchTodoListFromGoogleSheet();
   initPhotoCarousel();
 }
 
