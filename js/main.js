@@ -20,8 +20,11 @@ function initClock() {
 
 // Update the time and date display
 function updateTimeAndDate() {
+  const dateElement = document.getElementById('date');
+  const timeElement = document.getElementById('time');
+
   const now = new Date();
-  
+  /*
   // Format date as DD.MM.YYYY
   let day = String(now.getDate()).padStart(2, '0');
   let month = String(now.getMonth() + 1).padStart(2, '0');
@@ -33,26 +36,33 @@ function updateTimeAndDate() {
   let seconds = String(now.getSeconds()).padStart(2, '0');
   
   // Put it all together
-  const formattedDateTime = `${day}.${month}.${year}<BR>${hours}:${mins}:${seconds}`;
-  
+  //const formattedDateTime = `${day}.${month}.${year}<BR>${hours}:${mins}:${seconds}`;
+  */
+ 
   // Display it in the box
-  document.getElementById('timeDateBox').innerHTML = formattedDateTime;
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const dateString = now.toLocaleDateString('he-IL', options);
+  const timeString = now.toLocaleTimeString('he-IL');
+  dateElement.innerHTML = dateString;
+  timeElement.innerHTML = timeString;
+  
+  //document.getElementById('timeDateBox').innerHTML = formattedDateTime;
 }
 
 // Load all data sources initially
 function loadAllData() {
   // These functions are defined in their respective JS files
-  fetchWeather();
+  //fetchWeather();
   fetchNewsBreaks();
   fetchMessagesFromGoogleSheet();
-  //fetchTodoListFromGoogleSheet();
+  fetchTodoListFromGoogleSheet();
   initPhotoCarousel();
 }
 
 // Set up timers for periodic refresh of data
 function setupRefreshTimers() {
   // Refresh weather every 30 minutes
-  setInterval(fetchWeather, 30 * 60 * 1000);
+  //setInterval(fetchWeather, 30 * 60 * 1000);
   
   // Refresh news every 15 minutes
   setInterval(fetchNewsBreaks, 15 * 60 * 1000);

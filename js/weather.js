@@ -1,41 +1,60 @@
-// weather.js - Weather functionality for Yakinton 46 application
+// weather.js - Weather functionality for Yakinton 46 application using AccuWeather
 
-// Configuration for weather
-const weatherConfig = {
-  city: 'Haifa', // Default city
-  units: 'metric', // metric for Celsius
-  lang: 'he' // Hebrew language
-};
+// weather.js - Loads the WeatherWidget.io script
 
-// Fetch weather data from OpenWeatherMap API
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://weatherwidget.io/js/widget.min.js';
+        fjs.parentNode.insertBefore(js, fjs);
+    }
+})(document, 'script', 'weatherwidget-io-js');
+
+
+/*  
+// weather.js - Fetching 3-Day Forecast from AccuWeather API
+
+
+
+// Configuration for AccuWeather API
+const accuweatherConfig = {
+    apiKey: "aWDQcxJwFX5sPZOtkyWdc5c3n7drkBL9",  // Replace with your AccuWeather API key
+    locationKey: "213181",  // Haifa's AccuWeather location key
+    hours: 12,  // Get the next 12-hour forecast
+    lang: "he", // Hebrew language
+    days: 3     // Fetch 3 days only
+  };
 function fetchWeather() {
-  // In production, this API key should be handled server-side to prevent exposure
-  const apiKey = '86f54368cbb0bca4035b2fada47d3dd1';
-  const city = weatherConfig.city;
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${weatherConfig.units}&lang=${weatherConfig.lang}`;
+    const url = `https://dataservice.accuweather.com/forecasts/v1/daily/${accuweatherConfig.days}day/${accuweatherConfig.locationKey}?apikey=${accuweatherConfig.apiKey}&language=${accuweatherConfig.lang}&metric=true`;
   
-  console.log("Fetching Weather at", new Date().toLocaleTimeString());
+    document.getElementById("weatherBox").innerHTML = '<div class="loading-indicator">Loading weather...</div>';
+  
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        let forecastHTML = "<strong>Next 3 Days Forecast:</strong><br>";
+  
+        data.DailyForecasts.forEach(day => {
+          let date = new Date(day.Date).toLocaleDateString("he-IL", { weekday: "long" });
+          let minTemp = day.Temperature.Minimum.Value;
+          let maxTemp = day.Temperature.Maximum.Value;
+          let condition = day.Day.IconPhrase;
+  
+          forecastHTML += `${date}: ${minTemp}°C - ${maxTemp}°C, ${condition}<br>`;
+        });
+  
+        document.getElementById("weatherBox").innerHTML = forecastHTML;
+      })
+      .catch(err => {
+        console.error("Weather fetch error:", err);
+        document.getElementById("weatherBox").innerHTML = "Weather data unavailable";
+      });
+  }
+  
+  // Run fetchWeather when the page loads
+  document.addEventListener("DOMContentLoaded", fetchWeather);
+    */
 
-  // Show loading state
-  document.getElementById('weatherBox').innerHTML = '<div class="loading-indicator">Loading weather...</div>';
-  
-  fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Weather API responded with status ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(weatherData => {
-      // Extract and format weather data
-      const temp = Math.round(weatherData.main.temp); // Round to nearest integer
-      const condition = weatherData.weather[0].description;
-      
-      // Update the weather display
-      document.getElementById('weatherBox').innerHTML = `${condition}<br>${temp}°C`;
-    })
-    .catch(err => {
-      console.error('Weather fetch error:', err);
-      showError('weatherBox', 'Weather data unavailable');
-    });
-}
+

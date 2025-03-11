@@ -12,7 +12,10 @@
   <div class="header-title">YAKINTON 46</div>
 
   <!-- Time and date -->
-  <div class="time-and-date" id="timeDateBox"></div>
+  <div class="time-and-date" id="timeDateBox">
+    <div id="date"></div>
+    <div id="time"></div>
+  </div>
 
   <!-- Daily photo with carousel -->
   <div class="daily-photo">
@@ -24,9 +27,9 @@
 		<p>
     <table cellspacing="0" cellpadding="0">
       <tr>
-        <td class="first"><img src="images/qr/WifiQR.svg" width=90% height=auto alt="WiFi QR"></td>
+        <td class="first"><img src="images/qr/WifiQR.svg" width=50% height=auto alt="WiFi QR"></td>
         <!--<td class="second"><img src="images/qr/CallQR.svg" width=100% height=auto alt="Call QR"></td>-->
-        <td class="third"><img src="images/qr/EmailQR.svg" width=90% height=auto alt="Email QR"></td>
+        <td class="third"><img src="images/qr/EmailQR.svg" width=50% height=auto alt="Email QR"></td>
       </tr>
     </table>
 		</p>
@@ -45,7 +48,7 @@
       <img src="images/media-player/prev.svg" width=auto height=25px alt="Prev">
     </button>
   -->
-
+<!--
     <button id="playBtn" onclick="playAudio()">
       <img src="images/media-player/play.svg" width=auto height=25px alt="Play">
     </button>
@@ -53,7 +56,7 @@
     <button id="pauseBtn" onclick="pauseAudio()">
       <img src="images/media-player/pause.svg" width=auto height=25px alt="Pause">
     </button>
-  <!--
+  
     <button id="nextBtn" onclick="playNextTrack()">
       <img src="images/media-player/next.svg" width=auto height=25px alt="Next">
     </button>
@@ -70,9 +73,14 @@
   </div>
 
   <!-- Weather -->
-  <div class="weather" id="weatherBox">
-    <div class="loading-indicator">Loading weather...</div>
-  </div>
+  <!-- Weather Widget for Haifa using .weather class -->
+<div class="weather" id="weatherBox">
+  <a class="weatherwidget-io"
+     href="https://forecast7.com/he/32d7934d99/haifa/"
+     data-label_1="חיפה"
+     data-label_2="מזג אוויר"
+     data-days="3">חיפה מזג אוויר</a>
+</div>
 
   <!-- Messages from Google Sheets -->
   <div class="messages" id="messagesBox">
@@ -80,9 +88,9 @@
   </div>
 
   <!-- Todo list from Google Sheets -->
-  <!-- <div class="todo-list" id="todoListBox">
+  <div class="todo-list" id="todoListBox">
     <div class="loading-indicator">Loading todo items...</div>
-  </div> -->
+  </div>
 
   <!-- Load the separate JavaScript files -->
   <script src="js/main.js"></script>
