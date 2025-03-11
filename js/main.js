@@ -38,7 +38,7 @@ function updateTimeAndDate() {
   // Put it all together
   //const formattedDateTime = `${day}.${month}.${year}<BR>${hours}:${mins}:${seconds}`;
   */
- 
+
   // Display it in the box
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   const dateString = now.toLocaleDateString('he-IL', options);
@@ -108,3 +108,13 @@ function checkForRemoteRefresh() {
       })
       .catch(error => console.error("Error checking refresh status:", error));
 }
+
+function updateResolution() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  document.getElementById('resolutionBox').innerHTML = `Resolution: ${width} x ${height}`;
+}
+
+// Update resolution on load and when window resizes
+document.addEventListener('DOMContentLoaded', updateResolution);
+window.addEventListener('resize', updateResolution);
