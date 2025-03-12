@@ -58,7 +58,7 @@ body {
   line-height: 1.4;
   top: 3%;
   left: 2%;
-  width: 18%;
+  width: 20%;
   height: 10%;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-weight: 700;
@@ -81,7 +81,7 @@ body {
   line-height: 1.0;
   top: 15%;
   left: 2%;
-  width: 18%;
+  width: 20%;
   height: 58%;
 }
 
@@ -110,7 +110,7 @@ body {
   line-height: 1.0;
   top: 37%;
   left: 2%;
-  width: 18%;
+  width: 20%;
   height: 37%;
   overflow-y: auto;
 }
@@ -160,7 +160,7 @@ table.todo-table .sub-header {
 
   top: 75%;
   left: 2%;
-  width: 18%;
+  width: 20%;
   height: 4%;
 }
 
