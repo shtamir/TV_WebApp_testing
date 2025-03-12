@@ -36,22 +36,22 @@ const photoSchedule = {
   "Wednesday": {
     "morning": ["images/carousel/morning_04.gif", "images/carousel/morning_01.jpg", "images/carousel/morning_02.jpg"],
     "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg"],
-    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg"]
+    "evening": ["images/carousel/israel_01.jpg", "images/carousel/purim_01.jpg", "images/carousel/purim_02.jpg"]
   },
   "Thursday": {
-    "morning": ["images/carousel/morning_04.gif", "images/carousel/morning_01.jpg", "images/carousel/morning_02.jpg"],
-    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg"],
-    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg"]
+    "morning": ["images/carousel/morning_04.gif", "images/carousel/purim_01.jpg", "images/carousel/morning_02.jpg"],
+    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg", "images/carousel/purim_02.jpg"],
+    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg", "images/carousel/purim_01.jpg"]
   },
   "Friday": {
-    "morning": ["images/carousel/morning_04.gif", "images/carousel/morning_01.jpg", "images/carousel/morning_02.jpg"],
-    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg"],
-    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg", "images/carousel/weekend_01.jpg"]
+    "morning": ["images/carousel/morning_04.gif", "images/carousel/purim_01.jpg", "images/carousel/morning_02.jpg"],
+    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg", "images/carousel/purim_02.jpg"],
+    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg", "images/carousel/weekend_01.jpg", "images/carousel/purim_01.jpg"]
   },
   "Saturday": {
-    "morning": ["images/carousel/morning_04.gif", "images/carousel/morning_01.jpg", "images/carousel/morning_02.jpg", "images/carousel/weekend_01.jpg"],
-    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg", "images/carousel/weekend_01.jpg"],
-    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg", "images/carousel/weekend_01.jpg"]
+    "morning": ["images/carousel/morning_04.gif", "images/carousel/purim_01.jpg", "images/carousel/morning_01.jpg", "images/carousel/weekend_01.jpg"],
+    "noon": ["images/carousel/goodday_01.jpg", "images/carousel/default.jpg", "images/carousel/weekend_01.jpg", "images/carousel/purim_02.jpg"],
+    "evening": ["images/carousel/goodevening_01.jpg", "images/carousel/israel_01.jpg", "images/carousel/weekend_01.jpg", "images/carousel/purim_01.jpg"]
   },
 };
 /*
