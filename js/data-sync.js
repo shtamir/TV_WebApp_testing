@@ -10,9 +10,8 @@ const sheetsConfig = {
 
 // Fetch team messages from Google Sheets
 function fetchMessagesFromGoogleSheet() {
-  // Show loading state
   document.getElementById('messagesBox').innerHTML = '<div class="loading-indicator">Loading messages...</div>';
-  
+
   fetch(sheetsConfig.messagesSheetUrl)
     .then(response => {
       if (!response.ok) {
@@ -21,19 +20,26 @@ function fetchMessagesFromGoogleSheet() {
       return response.text();
     })
     .then(data => {
-      const lines = data.split('\n'); 
-      // For each line, take only the first column
-      const firstColumnValues = lines
-        .map(line => line.split(',')[0])  // split by comma, take first cell
-        .map(value => value.trim())       // remove extra whitespace
-        .filter(value => value.length > 0) // remove any empty lines
-        .slice(1, sheetsConfig.maxMessages + 1); // Skip header, take up to max messages
+      const lines = data.split('\n');
+      const messageData = lines
+        .map(line => line.split(',')) // Split each line into columns
+        .slice(0, sheetsConfig.maxMessages) // Take all rows, including the first one
+        .map(row => ({
+          text: row[0]?.trim() || '',         // First column: Message
+          color: row[1]?.trim() || '#000000', // Second column: Text color (default black)
+          fontSize: row[2]?.trim() || '16px'  // Third column: Font size (default 16px)
+        }))
+        .filter(item => item.text.length > 0); // Remove empty messages
 
-      // Display messages with a header
+      // Generate HTML
       const messagesHTML = `
-        <div style="font-weight: bold; margin-bottom: 10px;">הודעות:</div>
-        ${firstColumnValues.join('<br>')}
+        ${messageData.map(item => `
+          <div style="color: ${item.color}; font-size: ${item.fontSize};">
+            ${item.text}
+          </div>
+        `).join('')}
       `;
+
       document.getElementById('messagesBox').innerHTML = messagesHTML;
     })
     .catch(error => {
@@ -41,6 +47,7 @@ function fetchMessagesFromGoogleSheet() {
       showError('messagesBox', 'Unable to load messages');
     });
 }
+
 
 // Fetch todo list items from Google Sheets
 function fetchTodoListFromGoogleSheet_prev() {
