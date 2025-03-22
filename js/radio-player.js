@@ -1,7 +1,10 @@
 // Playlist configuration
 const playlist = [
     "audio/music_1.mp3",
-    "audio/music_2.mp3"
+    "audio/music_2.mp3",
+    "audio/music_3.mp3",
+    "audio/music_4.mp3",
+    "audio/music_5.mp3"
   ];
   
 let currentTrackIndex = 0;
