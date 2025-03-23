@@ -80,4 +80,26 @@ document.addEventListener("click", () => {
   initPlaylist();
 }, { once: true }); // Ensures it runs only once
 
+// Show remaining time
+function updateRemainingTime() {
+  const audio = document.getElementById("radioPlayer");
+  const timeElement = document.getElementById("remainingTime");
+
+  if (!audio || !timeElement) return;
+
+  const remaining = audio.duration - audio.currentTime;
+  if (isNaN(remaining)) {
+    timeElement.textContent = "Remaining: --:--";
+    return;
+  }
+
+  const minutes = Math.floor(remaining / 60);
+  const seconds = Math.floor(remaining % 60).toString().padStart(2, '0');
+  timeElement.textContent = `${minutes}:${seconds}`;
+}
+
+// Update remaining time every second
+setInterval(updateRemainingTime, 1000);
+
+
 // End of radio-player.js

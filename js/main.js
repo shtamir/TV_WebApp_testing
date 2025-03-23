@@ -108,13 +108,16 @@ function checkForRemoteRefresh() {
       })
       .catch(error => console.error("Error checking refresh status:", error));
 }
-
+/*
 function updateResolution() {
   const width = window.innerWidth;
   const height = window.innerHeight;
   document.getElementById('resolutionBox').innerHTML = `Resolution: ${width} x ${height}`;
 }
 
+
 // Update resolution on load and when window resizes
-document.addEventListener('DOMContentLoaded', updateResolution);
+document.addEventListener('DOMContentLoaded', updateResolution);*/
+//
+// Compare this snippet from js/data-sync.js:
 window.addEventListener('resize', updateResolution);
