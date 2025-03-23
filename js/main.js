@@ -1,5 +1,7 @@
 // main.js - Core functionality for Yakinton 46 application
 
+let adminWasPresent = false; // Initialize adminWasPresent flag
+
 // Initialize all components when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
   // Start the clock
@@ -76,6 +78,9 @@ function setupRefreshTimers() {
 
   // Check for refresh every 60 seconds (adjust as needed)
   setInterval(checkForRemoteRefresh, 60000);
+
+  // Check for Admin presence every 1 seconds
+  setInterval(checkForAdminPresence, 1000);  // check every 1s
 }
 
 // Helper function to show error states
@@ -121,3 +126,74 @@ document.addEventListener('DOMContentLoaded', updateResolution);*/
 //
 // Compare this snippet from js/data-sync.js:
 window.addEventListener('resize', updateResolution);
+
+// Check for Admin presence
+function checkForAdminPresence() {
+  fetch("/admin_presence.json")
+    .then(res => res.json())
+    .then(data => {
+      const present = data.admin_present;
+
+      if (present && !adminWasPresent) {
+        console.log("Admin just connected. Switching to alternate view.");
+        console.log("Admin is on same WiFi – switching view...");
+        switchToAlternateView();
+      }
+      else{
+        console.log("Here 1... present=" + present + " ; adminWasPresent=" + adminWasPresent);
+      }
+
+      if (!present && adminWasPresent) {
+        console.log("Admin disconnected. Restoring normal view.");
+        restoreNormalView();
+      }
+      else
+      {
+        console.log("Here 2... present=" + present + " ; adminWasPresent=" + adminWasPresent);
+      }
+
+      adminWasPresent = present;
+    })
+    .catch(err => {
+      console.warn("Could not fetch admin presence:", err);
+    });
+}
+
+// Switch to an alternate view when Admin is present
+function switchToAlternateView() {
+  console.log("Here 7... switchToAlternateView");
+
+  // Change image
+  document.getElementById('photoElement').src = "admin/images/admin_pic_01.jpg";
+
+  // Change audio
+  const mediaElement = document.getElementById('radioPlayer');
+  mediaElement.src = "admin/audio/track_01.mp3";
+  mediaElement.play().catch(() => {
+    console.warn("Autoplay blocked. Adding user interaction to play.");
+    document.addEventListener('click', function playAudio() {
+      mediaElement.play();
+      document.removeEventListener('click', playAudio);
+    });
+  });
+
+   // Auto-restore to default mode after 2 minutes
+   setTimeout(() => {
+    restoreNormalView();
+  }, 2 * 60 * 1000); // 2 minutes
+}
+
+// Restore to normal view after Admin leaves
+function restoreNormalView() {
+  console.log("Restoring to normal view");
+
+  // Restart photo carousel
+  initPhotoCarousel(); // this reloads the regular time/day-based photo set
+
+  // Restart music
+  const mediaElement = document.getElementById('radioPlayer');
+  mediaElement.src = "audio/music_2.mp3";
+  mediaElement.play().catch(err => console.warn("Autoplay blocked"));
+
+  // Optionally reset presence file if needed (e.g., with another API call)
+}
