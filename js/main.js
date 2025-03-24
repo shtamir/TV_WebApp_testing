@@ -80,7 +80,7 @@ function setupRefreshTimers() {
   setInterval(checkForRemoteRefresh, 60000);
 
   // Check for Admin presence every 1 seconds
-  setInterval(checkForAdminPresence, 1000);  // check every 1s
+  //setInterval(checkForAdminPresence, 1000);  // check every 1s
 }
 
 // Helper function to show error states
@@ -129,7 +129,7 @@ window.addEventListener('resize', updateResolution);
 
 // Check for Admin presence
 function checkForAdminPresence() {
-  fetch('/api/admin-status')
+  fetch("https://v0-tvw-eb-app-os.vercel.app/api/admin-status")
     .then(res => res.json())
     .then(data => {
       if (data.admin_present) {
