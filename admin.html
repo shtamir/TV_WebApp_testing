@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head><title>Join WiFi</title></head>
+  <head><title>TV Join</title></head>
   <body>
-    <h2>Joining...</h2>
+    <h2>Connecting to TV...</h2>
+    <button onclick="join()">Join</button>
+    <button onclick="leave()">Leave</button>
 
-    <button onclick="resetPresence()">Leave TV</button>
     <script>
-        function resetPresence() {
-          fetch("https://tv-web-app-mu.vercel.app/api/admin-reset", {
-            method: "POST"
-          }).then(() => alert("TV will now return to normal"));
-        }
-      </script>
-      
-    <script>
-      fetch("https://tv-web-app-mu.vercel.app/api/admin-ping", {
-        method: "POST"
-      }).then(() => {
-        document.body.innerHTML = "<h2>Connected ✅</h2>";
-      });
+      function join() {
+        fetch('/api/admin-ping', { method: 'POST' })
+          .then(() => alert("Joined TV mode"));
+      }
+
+      function leave() {
+        fetch('/api/admin-reset', { method: 'POST' })
+          .then(() => alert("Left TV mode"));
+      }
     </script>
   </body>
 </html>

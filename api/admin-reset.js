@@ -1,15 +1,19 @@
 // api/admin-reset.js
-import fs from 'fs';
-import path from 'path';
 
 export default async function handler(req, res) {
-  console.log("Here 4... handler");
-  if (req.method === 'POST') {
-
-    const filePath = path.resolve('./public/admin_presence.json');
-    fs.writeFileSync(filePath, JSON.stringify({ admin_present: false }));
-    return res.status(200).json({ status: "reset" });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Only POST allowed' });
   }
-  console.log("Here 5... handler");
-  return res.status(405).json({ error: "Method Not Allowed" });
+
+  const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
+  const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  const response = await fetch(`${redisUrl}/set/admin_present/false`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${redisToken}`,
+    },
+  });
+
+  return res.status(200).json({ status: 'Admin presence cleared' });
 }

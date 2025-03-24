@@ -129,34 +129,19 @@ window.addEventListener('resize', updateResolution);
 
 // Check for Admin presence
 function checkForAdminPresence() {
-  fetch("/admin_presence.json")
+  fetch('/api/admin-status')
     .then(res => res.json())
     .then(data => {
-      const present = data.admin_present;
-
-      if (present && !adminWasPresent) {
+      if (data.admin_present) {
         console.log("Admin just connected. Switching to alternate view.");
         console.log("Admin is on same WiFi – switching view...");
         switchToAlternateView();
-      }
-      else{
-        console.log("Here 1... present=" + present + " ; adminWasPresent=" + adminWasPresent);
-      }
-
-      if (!present && adminWasPresent) {
-        console.log("Admin disconnected. Restoring normal view.");
+      } else {
+        console.log("Admin not connected - restoring view...");
         restoreNormalView();
       }
-      else
-      {
-        console.log("Here 2... present=" + present + " ; adminWasPresent=" + adminWasPresent);
-      }
-
-      adminWasPresent = present;
     })
-    .catch(err => {
-      console.warn("Could not fetch admin presence:", err);
-    });
+    .catch(err => console.warn("Presence check failed:", err));
 }
 
 // Switch to an alternate view when Admin is present
