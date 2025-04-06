@@ -1,4 +1,4 @@
-# Yakinton 46 Digital Billboard
+# Yakinton 46 Digital Billboard - branch for Netlify DB test
 
 A web application designed to run on an Android TV web browser and display various types of information in a billboard-style format.
 
