@@ -132,7 +132,7 @@ const LOCAL_API_BASE = "http://localhost:8888/.netlify/functions";
 
 // Determine which base URL to use based on an environment variable or condition
 //const API_BASE = process.env.USE_REMOTE === 'true' ? NETLIFY_BASE : LOCAL_API_BASE;
-const API_BASE = LOCAL_API_BASE;
+const API_BASE = NETLIFY_BASE;
 //console.log(`Using API base: ${API_BASE}`);
 
 
