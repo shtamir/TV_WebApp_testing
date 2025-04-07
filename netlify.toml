@@ -3,7 +3,7 @@
   envFiles = [".env"]
 
 [build]
-  publish = "dist"          # Or "public", or "" if root is used
+  publish = "."  # root folder with index.html
   functions = "netlify/functions"
 
 [functions]
