@@ -20,16 +20,36 @@
       // If so, use the local API endpoint; otherwise, use the production endpoint
       // This function is called when the user clicks the "Join" button
       function join() {
-        //fetch('https://yakinton-46.netlify.app/.netlify/functions/ping', { method: 'POST' });
-        fetch(`${API_BASE}/ping`, { method: 'POST' });
-      }
+        console.log('Calling join function...');
+        fetch(`${API_BASE}/ping`, { method: 'POST' })
+      .then(response => {
+        console.log('Response from join:', response);
+        return response.json(); // Assuming the response is JSON
+      })
+      .then(data => {
+        console.log('Data from join:', data);
+      })
+      .catch(error => {
+        console.error('Error in join:', error);
+      });
+}
 
       // Check if the current page is being served from localhost or a specific domain
       // If so, use the local API endpoint; otherwise, use the production endpoint
       // This function is called when the user clicks the "Leave" button
       function leave() {
-        fetch(`${API_BASE}/reset`, { method: 'POST' });
-        //fetch('https://yakinton-46.netlify.app/.netlify/functions/reset', { method: 'POST' });
+        console.log('Calling leave function...');
+        fetch(`${API_BASE}/reset`, { method: 'POST' })
+          .then(response => {
+            console.log('Response from leave:', response);
+            return response.json(); // Assuming the response is JSON
+          })
+          .then(data => {
+            console.log('Data from leave:', data);
+          })
+          .catch(error => {
+            console.error('Error in leave:', error);
+          });
       }
 
       function join_prev() {
