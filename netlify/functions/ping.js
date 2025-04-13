@@ -1,6 +1,6 @@
 export async function handler(event) {
   const origin = event.headers.origin || '';
-  const isNetlifyPreview = origin.includes('--yakinton-46.netlify.app') || origin === 'https://yakinton-46.netlify.app';
+  const isNetlifyPreview = origin.includes('--yakinton46-test.netlify.app') || origin === 'https://yakinton46-test.netlify.app';
 
   const corsHeaders = {
     'Access-Control-Allow-Origin': isNetlifyPreview ? origin : '',
