@@ -80,7 +80,7 @@ function setupRefreshTimers() {
   setInterval(checkForRemoteRefresh, 60000);
 
   // Check for Admin presence every 1 seconds
-  //setInterval(checkForAdminPresence, 1000);  // check every 1s
+  setInterval(checkForiPhonePresence, 1000);  // check every 1s
 }
 
 // Helper function to show error states
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', updateResolution);*/
 // Compare this snippet from js/data-sync.js:
  // window.addEventListener('resize', updateResolution);
 
-const NETLIFY_BASE = 'https://yakinton-46.netlify.app/.netlify/functions';
+const NETLIFY_BASE = 'https://yakinton46-test.netlify.app/.netlify/functions';
 const LOCAL_API_BASE = "http://localhost:8888/.netlify/functions";
 
 // Determine which base URL to use based on an environment variable or condition
