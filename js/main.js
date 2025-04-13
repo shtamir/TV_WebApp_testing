@@ -125,7 +125,7 @@ function updateResolution() {
 document.addEventListener('DOMContentLoaded', updateResolution);*/
 //
 // Compare this snippet from js/data-sync.js:
-window.addEventListener('resize', updateResolution);
+ // window.addEventListener('resize', updateResolution);
 
 const NETLIFY_BASE = 'https://yakinton-46.netlify.app/.netlify/functions';
 const LOCAL_API_BASE = "http://localhost:8888/.netlify/functions";
