@@ -80,7 +80,7 @@ function setupRefreshTimers() {
   setInterval(checkForRemoteRefresh, 60000);
 
   // Check for Admin presence every 1 seconds
-  setInterval(checkForiPhonePresence, 1000);  // check every 1s
+  setInterval(checkForAdminPresence, 1000);  // check every 1s
 }
 
 // Helper function to show error states
@@ -137,11 +137,11 @@ const API_BASE = NETLIFY_BASE;
 
 
 // Check for Admin presence
-function checkForiPhonePresence() {
+function checkForAdminPresence() {
   fetch(`${API_BASE}/status`)
     .then(res => res.json())
     .then(data => {
-      if (data.iphone_present) {
+      if (data.admin_present) {
         switchToAlternateView();
       } else {
         restoreNormalView();

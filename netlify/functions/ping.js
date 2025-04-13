@@ -32,7 +32,7 @@ export async function handler(event) {
   }
 
   try {
-    await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/iphone_present/true`, {
+    await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/admin_present/true`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`,

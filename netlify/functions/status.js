@@ -1,7 +1,7 @@
 // netlify/functions/status.js
 
 export async function handler_orig(event, context) {
-  const response = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/get/iphone_present`, {
+  const response = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/get/admin_present`, {
     headers: {
       Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
     }
@@ -12,7 +12,7 @@ export async function handler_orig(event, context) {
   return {
     statusCode: 200,
     body: JSON.stringify({
-      iphone_present: json.result === 'true'
+      admin_present: json.result === 'true'
     })
   };
 }
@@ -21,7 +21,7 @@ export async function handler(event, context) {
   console.log('Starting handler function...');
   
   try {
-    const response = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/get/iphone_present`, {
+    const response = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/get/admin_present`, {
       headers: {
         Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
       }
@@ -41,7 +41,7 @@ export async function handler(event, context) {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        iphone_present: json.result === 'true'
+        admin_present: json.result === 'true'
       })
     };
   } catch (error) {

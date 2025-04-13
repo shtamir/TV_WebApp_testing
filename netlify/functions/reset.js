@@ -5,7 +5,7 @@ export async function handler(event, context) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const response = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/iphone_present/false`, {
+  const response = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/set/admin_present/false`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
