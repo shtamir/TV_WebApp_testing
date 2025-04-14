@@ -221,7 +221,7 @@ function switchToAlternateView() {
   // stop any existing photo rotation
   if (photoInterval) clearInterval(photoInterval);
   // Change image
-  document.getElementById('photoElement').src = "admin/images/admin_pic_01.jpg";
+  document.getElementById('photoElement').src = "admin/images/admin_pic_02.jpg";
   photo.style.opacity = 1;           // make sure it’s not transparent
 
   // Change audio
