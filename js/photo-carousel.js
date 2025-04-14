@@ -154,7 +154,7 @@ function getTodayPhotos() {
 
 // Variables for rotation
 let currentPhotoIndex = 0;
-let photoInterval = null;
+//let photoInterval = null;
 
 // Initialize the photo carousel
 function initPhotoCarousel() {
