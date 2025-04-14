@@ -1,7 +1,19 @@
 // netlify/functions/status.js
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  };
+
 export async function handler(event) {          // keep this one
   console.log('Starting handler function…');
+
+  // Pre‑flight
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers: corsHeaders };
+  }
+
   try {
     const response = await fetch(
       `${process.env.UPSTASH_REDIS_REST_URL}/get/admin_present`,
@@ -11,6 +23,7 @@ export async function handler(event) {          // keep this one
     const json = await response.json();
     return {
       statusCode: 200,
+      headers: corsHeaders,
       body: JSON.stringify({ admin_present: json.result === 'true' })
     };
   } catch (err) {

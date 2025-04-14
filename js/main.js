@@ -4,6 +4,7 @@
 let lastAdminPresent = null;   // null = unknown, true / false after first poll
 const presenceEl = document.getElementById('presenceIndicator');
 let adminModeActive = false
+let photoInterval = null;   // will be reused by photo‑carousel.js
 
 /* ---------- helper to update UI --------- */
 function updatePresenceIndicator(isPresent) {
@@ -203,6 +204,7 @@ async function checkForAdminPresence() {
         lastAdminPresent = data.admin_present;    // remember for next poll
         } catch (err) {
           console.warn("Presence check failed:", err);
+          updatePresenceIndicator(false);   // assume “not present” on error
         // Handle error, maybe set a flag or retry later
         console.error("Error fetching admin presence:", err);}
 }
@@ -220,6 +222,7 @@ function switchToAlternateView() {
   if (photoInterval) clearInterval(photoInterval);
   // Change image
   document.getElementById('photoElement').src = "admin/images/admin_pic_01.jpg";
+  photo.style.opacity = 1;           // make sure it’s not transparent
 
   // Change audio
   const mediaElement = document.getElementById('radioPlayer');
@@ -231,11 +234,12 @@ function switchToAlternateView() {
       document.removeEventListener('click', playAudio);
     });
   });
-
+/*
    // Auto-restore to default mode after 1 minutes
    setTimeout(() => {
     restoreNormalView();
   }, 2 * 60 * 1000); // 1 minute
+  */
 }
 
 // Restore to normal view after Admin leaves
@@ -254,6 +258,8 @@ function restoreNormalView() {
   mediaElement.play().catch(err => console.warn("Autoplay blocked"));
 
   // Optionally reset presence file if needed (e.g., with another API call)
+  // guarantee visibility
+  document.getElementById('photoElement').style.opacity = 1;
 }
 
 function scheduleSafetyReload() {
