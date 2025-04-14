@@ -359,3 +359,18 @@ audio {
   padding: 10px;
   border-radius: 5px;
 }
+
+/* Admin‑presence badge */
+.presence-indicator {
+  position: absolute;
+  top: 1%;
+  right: 2%;
+  padding: 6px 12px;
+  font-size: 0.9em;
+  font-weight: bold;
+  border-radius: 6px;
+  background: #666;      /* default grey while checking */
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  pointer-events: none;  /* avoid accidental clicks */
+}

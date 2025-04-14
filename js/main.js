@@ -1,6 +1,25 @@
 // main.js - Core functionality for Yakinton 46 application
 
+/* --------------- globals ---------------- */
 let lastAdminPresent = null;   // null = unknown, true / false after first poll
+
+/* ---------- helper to update UI --------- */
+function updatePresenceIndicator(isPresent) {
+  if (!presenceEl) return;
+  
+  if (isPresent === null) {
+    presenceEl.textContent = 'Checking admin status…';
+    presenceEl.style.background = '#666';
+  } else if (isPresent) {
+    presenceEl.textContent = 'Admin PRESENT';
+    presenceEl.style.background = '#28a745';   /* green */
+  } else {
+    presenceEl.textContent = 'Admin NOT present';
+    presenceEl.style.background = '#c82333';   /* red */
+  }
+}
+
+updatePresenceIndicator(null);   // initial state
 
 // Initialize all components when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -102,6 +121,8 @@ setTimeout(() => {
 }, 60 * 60 * 1000);  // 1 hour in milliseconds
 */
 
+
+// Check for remote refresh trigger
 function checkForRemoteRefresh() {
   fetch("refresh_trigger.txt") // URL of your remote refresh trigger
       .then(response => response.text())
@@ -138,6 +159,7 @@ const LOCAL_API_BASE = "http://localhost:8888/.netlify/functions";
 const API_BASE = NETLIFY_BASE;
 //console.log(`Using API base: ${API_BASE}`);
 
+/* ------------- polling loop ------------- */
 
 // Check for Admin presence
 async function checkForAdminPresence() {
@@ -157,15 +179,22 @@ async function checkForAdminPresence() {
     try {
       const data = await fetch(`${API_BASE}/status`).then(r => r.json());
       // Only act when the state actually changes
-      if (data.admin_present && lastAdminPresent === false) {
-        switchToAlternateView();
-        console.log("Admin connected. Switching to alternate view…");}
+      // if (data.admin_present && lastAdminPresent === false) {
+      //   switchToAlternateView();
+      //   console.log("Admin connected. Switching to alternate view…");}
         
-        if (!data.admin_present && lastAdminPresent === true) {
-          console.log("Admin disconnected. Restoring normal view…");
-          restoreNormalView();
-        }
+      //   if (!data.admin_present && lastAdminPresent === true) {
+      //     console.log("Admin disconnected. Restoring normal view…");
+      //     restoreNormalView();
+      //   }
+      if (data.admin_present !== lastAdminPresent) {
+      // state changed → update the view and the badge
+        if (data.admin_present) switchToAlternateView();
+        else restoreNormalView();
         
+        updatePresenceIndicator(data.admin_present);
+        console.log("Admin presence changed:", data.admin_present);}
+
         lastAdminPresent = data.admin_present;    // remember for next poll
         } catch (err) {
           console.warn("Presence check failed:", err);
@@ -178,6 +207,7 @@ async function checkForAdminPresence() {
 function switchToAlternateView() {
   console.log("Here 7... switchToAlternateView");
   lastAdminPresent = true; // Set the flag to true
+  updatePresenceIndicator(true);  // Update the presence indicator
 
   // Change image
   document.getElementById('photoElement').src = "admin/images/admin_pic_01.jpg";
@@ -203,6 +233,7 @@ function switchToAlternateView() {
 function restoreNormalView() {
   console.log("Restoring to normal view");
   lastAdminPresent = false; // Set the flag to false
+  updatePresenceIndicator(false); // Update the presence indicator
 
   // Restart photo carousel
   initPhotoCarousel(); // this reloads the regular time/day-based photo set
