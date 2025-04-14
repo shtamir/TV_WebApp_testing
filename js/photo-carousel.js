@@ -158,7 +158,7 @@ let photoInterval = null;
 
 // Initialize the photo carousel
 function initPhotoCarousel() {
-  photoElement = document.getElementById('photoElement');
+  const photoElement = document.getElementById('photoElement');
 
   if (!photoElement) {
     console.error('Photo element not found!');
@@ -176,13 +176,14 @@ function initPhotoCarousel() {
 
   // Start rotation if multiple photos exist
   if (photos.length > 1) {
-    photoInterval = setInterval(() => rotatePhotos(photos), 15000);
+    photoInterval = setInterval(() => rotatePhotos(photos), 15_000);
   }
 }
 
 // Rotate between available photos
 function rotatePhotos(photoList) {
-  const photoElement = document.getElementById('photoElement');
+  const photoElement = document.getElementById('photoElement'); // OK, fresh lookup
+
   if (!photoElement) return;
 
   currentPhotoIndex = (currentPhotoIndex + 1) % photoList.length;

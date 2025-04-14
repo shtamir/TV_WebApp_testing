@@ -1,12 +1,17 @@
 export async function handler(event) {
   const origin = event.headers.origin || '';
-  const isNetlifyPreview = origin.includes('--yakinton46-test.netlify.app') || origin === 'https://yakinton46-test.netlify.app';
+const isNetlifyPreview =
+  origin.includes('--yakinton46-test.netlify.app')  ||
+  origin === 'https://yakinton46-test.netlify.app'  || 
+  origin.startsWith('http://localhost')             || 
+  origin.startsWith('http://127.0.0.1');
 
-  const corsHeaders = {
-    'Access-Control-Allow-Origin': isNetlifyPreview ? origin : '',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  };
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  //'Access-Control-Allow-Origin': isNetlifyPreview ? origin : '',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS'
+};
 
   const debugInfo = {
     origin,

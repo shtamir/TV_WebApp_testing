@@ -41,8 +41,6 @@ function playPreviousTrack() {
 function initPlaylist() {
   if (playlist.length > 0) {
     loadTrack(0);
-    mediaElement.src = playlist[0]; // Set first song
-    mediaElement.play().catch(error => console.warn("Autoplay blocked:", error));
   }
 }
   
@@ -59,8 +57,8 @@ function pauseAudio() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  displayMediaFileName();
-  initPlaylist();
+  initPlaylist();           // sets the real src
+  displayMediaFileName();   // now reflects the final value
 });
 
 // Display the media file name
@@ -87,7 +85,10 @@ function updateRemainingTime() {
 
   if (!audio || !timeElement) return;
 
-  const remaining = audio.duration - audio.currentTime;
+  const remaining = audio.duration && !isNaN(audio.duration)
+                ? audio.duration - audio.currentTime
+                : NaN;
+  
   if (isNaN(remaining)) {
     timeElement.textContent = "Remaining: --:--";
     return;

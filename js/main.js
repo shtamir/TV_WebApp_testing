@@ -1,6 +1,6 @@
 // main.js - Core functionality for Yakinton 46 application
 
-let adminWasPresent = false; // Initialize adminWasPresent flag
+let lastAdminPresent = null;   // null = unknown, true / false after first poll
 
 // Initialize all components when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -57,7 +57,10 @@ function loadAllData() {
   //fetchWeather();
   fetchNewsBreaks();
   fetchMessagesFromGoogleSheet();
-  fetchTodoListFromGoogleSheet();
+
+  if (document.getElementById('todoListBox')) {
+    fetchTodoListFromGoogleSheet();
+  }
   initPhotoCarousel();
 }
 
@@ -80,7 +83,7 @@ function setupRefreshTimers() {
   setInterval(checkForRemoteRefresh, 60000);
 
   // Check for Admin presence every 1 seconds
-  setInterval(checkForAdminPresence, 1000);  // check every 1s
+  setInterval(checkForAdminPresence, 30_000); // every 30 s
 }
 
 // Helper function to show error states
@@ -92,12 +95,12 @@ function showError(elementId, message) {
   // Log to console for debugging
   console.error(`Error in ${elementId}: ${message}`);
 }
-
+/*
 // Refresh the page every 60 minutes (adjust as needed)
 setTimeout(() => {
   location.reload();
 }, 60 * 60 * 1000);  // 1 hour in milliseconds
-
+*/
 
 function checkForRemoteRefresh() {
   fetch("refresh_trigger.txt") // URL of your remote refresh trigger
@@ -137,38 +140,44 @@ const API_BASE = NETLIFY_BASE;
 
 
 // Check for Admin presence
-function checkForAdminPresence() {
+async function checkForAdminPresence() {
+  /*
   fetch(`${API_BASE}/status`)
     .then(res => res.json())
     .then(data => {
       if (data.admin_present) {
         switchToAlternateView();
       } else {
+        console.log("Admin disconnected. Switching to regular view.");
         restoreNormalView();
       }
     })
     .catch(err => console.warn("Presence check failed:", err));
+*/
+    try {
+      const data = await fetch(`${API_BASE}/status`).then(r => r.json());
+      // Only act when the state actually changes
+      if (data.admin_present && lastAdminPresent === false) {
+        switchToAlternateView();
+        console.log("Admin connected. Switching to alternate view…");}
+        
+        if (!data.admin_present && lastAdminPresent === true) {
+          console.log("Admin disconnected. Restoring normal view…");
+          restoreNormalView();
+        }
+        
+        lastAdminPresent = data.admin_present;    // remember for next poll
+        } catch (err) {
+          console.warn("Presence check failed:", err);
+        // Handle error, maybe set a flag or retry later
+        console.error("Error fetching admin presence:", err);}
 }
 
-function checkForAdminPresence_old() {
-  fetch("https://v0-tvw-eb-app-os.vercel.app/api/admin-status")
-    .then(res => res.json())
-    .then(data => {
-      if (data.admin_present) {
-        console.log("Admin just connected. Switching to alternate view.");
-        console.log("Admin is on same WiFi – switching view...");
-        switchToAlternateView();
-      } else {
-        console.log("Admin not connected - restoring view...");
-        restoreNormalView();
-      }
-    })
-    .catch(err => console.warn("Presence check failed:", err));
-}
 
 // Switch to an alternate view when Admin is present
 function switchToAlternateView() {
   console.log("Here 7... switchToAlternateView");
+  lastAdminPresent = true; // Set the flag to true
 
   // Change image
   document.getElementById('photoElement').src = "admin/images/admin_pic_01.jpg";
@@ -184,15 +193,16 @@ function switchToAlternateView() {
     });
   });
 
-   // Auto-restore to default mode after 2 minutes
+   // Auto-restore to default mode after 1 minutes
    setTimeout(() => {
     restoreNormalView();
-  }, 2 * 60 * 1000); // 2 minutes
+  }, 1 * 60 * 1000); // 1 minute
 }
 
 // Restore to normal view after Admin leaves
 function restoreNormalView() {
   console.log("Restoring to normal view");
+  lastAdminPresent = false; // Set the flag to false
 
   // Restart photo carousel
   initPhotoCarousel(); // this reloads the regular time/day-based photo set
@@ -204,3 +214,12 @@ function restoreNormalView() {
 
   // Optionally reset presence file if needed (e.g., with another API call)
 }
+
+function scheduleSafetyReload() {
+  setTimeout(() => {
+    if (!adminWasPresent) location.reload();      // file‑level flag
+    else scheduleSafetyReload();                  // push it out again
+  }, 6 * 60 * 60 * 1000);   // every 6 h
+}
+
+document.addEventListener('DOMContentLoaded', scheduleSafetyReload);

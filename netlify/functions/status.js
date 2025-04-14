@@ -1,23 +1,25 @@
 // netlify/functions/status.js
 
-export async function handler_orig(event, context) {
-  const response = await fetch(`${process.env.UPSTASH_REDIS_REST_URL}/get/admin_present`, {
-    headers: {
-      Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`
-    }
-  });
-
-  const json = await response.json();
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      admin_present: json.result === 'true'
-    })
-  };
+export async function handler(event) {          // keep this one
+  console.log('Starting handler function…');
+  try {
+    const response = await fetch(
+      `${process.env.UPSTASH_REDIS_REST_URL}/get/admin_present`,
+      { headers: { Authorization:
+          `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}` } });
+    if (!response.ok) throw new Error(`Upstash ${response.status}`);
+    const json = await response.json();
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ admin_present: json.result === 'true' })
+    };
+  } catch (err) {
+    console.error(err);
+    return { statusCode: 500, body: 'Internal Server Error' };
+  }
 }
 
-export async function handler(event, context) {
+export async function handler_prev(event, context) {
   console.log('Starting handler function...');
   
   try {

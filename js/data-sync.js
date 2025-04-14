@@ -2,7 +2,7 @@
 
 // Configuration for Google Sheets
 const sheetsConfig = {
-  messagesSheetUrl: ' https://docs.google.com/spreadsheets/d/e/2PACX-1vRm_3aSAL3tnmyOHuAXMIc0IF6V3MlR-CmB3rmebHON0V_V3r3ido3hdq2qr_ByTbIayW1AKZjp45IL/pub?gid=0&single=true&output=csv',  
+  messagesSheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRm_3aSAL3tnmyOHuAXMIc0IF6V3MlR-CmB3rmebHON0V_V3r3ido3hdq2qr_ByTbIayW1AKZjp45IL/pub?gid=0&single=true&output=csv',  
   todoSheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRm_3aSAL3tnmyOHuAXMIc0IF6V3MlR-CmB3rmebHON0V_V3r3ido3hdq2qr_ByTbIayW1AKZjp45IL/pub?gid=1147753220&single=true&output=csv',
   maxMessages: 10,
   maxTodoItems: 16
@@ -153,10 +153,8 @@ function fetchTodoListFromGoogleSheet_prev1() {
 
 function fetchTodoListFromGoogleSheet() {
   const todoListBox = document.getElementById('todoListBox');
-  if (!todoListBox) {
-    console.error("todoListBox element not found!");
-    return;
-  }
+  // Check if the element exists before proceeding 
+  if (!todoListBox) return;   // silently skip when box is absent
 
   // Show loading state
   todoListBox.innerHTML = '<div class="loading-indicator">Loading todo list...</div>';

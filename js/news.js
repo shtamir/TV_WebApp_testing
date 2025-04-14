@@ -81,12 +81,18 @@ function startCyclingNews() {
   // Show first batch immediately
   renderNewsBatch();
 
-  // Set up interval for cycling
-  newsInterval = setInterval(() => {
-    currentIndex = (currentIndex + newsConfig.displayItems) % allNewsItems.length;
-    renderNewsBatch();
-  }, newsConfig.cycleIntervalMs);
+  // Set up interval for cycling through news items
+  // Check if we have enough items to cycle through
+  // Only start the interval if we actually have more
+  if (allNewsItems.length > newsConfig.displayItems) {
+    newsInterval = setInterval(() => {
+      currentIndex =
+        (currentIndex + newsConfig.displayItems) % allNewsItems.length;
+      renderNewsBatch();
+    }, newsConfig.cycleIntervalMs);
+  }
 }
+
 
 // Render a batch of news items
 function renderNewsBatch() {
