@@ -158,6 +158,9 @@ let photoInterval = null;
 
 // Initialize the photo carousel
 function initPhotoCarousel() {
+  
+  if (adminModeActive) return; // Don't start if admin mode is active
+
   const photoElement = document.getElementById('photoElement');
 
   if (!photoElement) {
@@ -182,6 +185,9 @@ function initPhotoCarousel() {
 
 // Rotate between available photos
 function rotatePhotos(photoList) {
+  // Check if admin mode is active  
+  if (adminModeActive) return;
+
   const photoElement = document.getElementById('photoElement'); // OK, fresh lookup
 
   if (!photoElement) return;

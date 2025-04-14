@@ -3,7 +3,7 @@
 /* --------------- globals ---------------- */
 let lastAdminPresent = null;   // null = unknown, true / false after first poll
 const presenceEl = document.getElementById('presenceIndicator');
-
+let adminModeActive = false
 
 /* ---------- helper to update UI --------- */
 function updatePresenceIndicator(isPresent) {
@@ -98,7 +98,10 @@ function setupRefreshTimers() {
   //setInterval(fetchTodoListFromGoogleSheet, 5 * 60 * 1000);
 
   // Refresh photo carousel every 10 minutes
-  setInterval(initPhotoCarousel, 10 * 60 * 1000); // Refresh every 10 minutes
+  setInterval(() => {
+    if (!adminModeActive) initPhotoCarousel();
+  }, 10 * 60 * 1000);
+
 
   // Check for refresh every 60 seconds (adjust as needed)
   setInterval(checkForRemoteRefresh, 60000);
@@ -207,10 +210,14 @@ async function checkForAdminPresence() {
 
 // Switch to an alternate view when Admin is present
 function switchToAlternateView() {
-  console.log("Here 7... switchToAlternateView");
+  console.log("switchToAlternateView...");
   lastAdminPresent = true; // Set the flag to true
+  adminModeActive = true;  // Set the admin mode active flag
+
   updatePresenceIndicator(true);  // Update the presence indicator
 
+  // stop any existing photo rotation
+  if (photoInterval) clearInterval(photoInterval);
   // Change image
   document.getElementById('photoElement').src = "admin/images/admin_pic_01.jpg";
 
@@ -228,7 +235,7 @@ function switchToAlternateView() {
    // Auto-restore to default mode after 1 minutes
    setTimeout(() => {
     restoreNormalView();
-  }, 1 * 60 * 1000); // 1 minute
+  }, 2 * 60 * 1000); // 1 minute
 }
 
 // Restore to normal view after Admin leaves
@@ -236,6 +243,7 @@ function restoreNormalView() {
   console.log("Restoring to normal view");
   lastAdminPresent = false; // Set the flag to false
   updatePresenceIndicator(false); // Update the presence indicator
+  adminModeActive = false;
 
   // Restart photo carousel
   initPhotoCarousel(); // this reloads the regular time/day-based photo set
@@ -250,7 +258,7 @@ function restoreNormalView() {
 
 function scheduleSafetyReload() {
   setTimeout(() => {
-    if (!lastAdminPresent) location.reload();      // file‑level flag
+    if (!adminModeActive) location.reload();      // file‑level flag
     else scheduleSafetyReload();                  // push it out again
   }, 6 * 60 * 60 * 1000);   // every 6 h
 }
