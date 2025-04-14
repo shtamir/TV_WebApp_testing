@@ -6,61 +6,64 @@
     <button onclick="join()">Join</button>
     <button onclick="leave()">Leave</button>
 
-    <script>
+    <p id="presenceStatus" style="font-weight:bold; color:#666">
+      Checking status…
+    </p>
 
-      const NETLIFY_BASE = 'https://yakinton46-test.netlify.app/.netlify/functions';
-      const LOCAL_API_BASE = "http://localhost:8888/.netlify/functions";
+  <script>
+    /* ----------------- CONFIG ----------------- */
+    const NETLIFY_BASE = 'https://yakinton46-test.netlify.app/.netlify/functions';
+    const LOCAL_API_BASE = 'http://localhost:8888/.netlify/functions';
+    const API_BASE = NETLIFY_BASE;        // switch as needed
 
-      // Determine which base URL to use based on an environment variable or condition
-      //const API_BASE = process.env.USE_REMOTE === 'true' ? NETLIFY_BASE : LOCAL_API_BASE;
-      const API_BASE = NETLIFY_BASE; // or LOCAL_API_BASE based on your condition
-      //console.log(`Using API base: ${API_BASE}`);
+    /* --------------- UI ELEMENTS -------------- */
+    const statusEl = document.getElementById('presenceStatus');
 
-      // Check if the current page is being served from localhost or a specific domain
-      // If so, use the local API endpoint; otherwise, use the production endpoint
-      // This function is called when the user clicks the "Join" button
-      function join() {
-        console.log('Calling join function...');
-        fetch(`${API_BASE}/ping`, { method: 'POST' })
-      .then(response => {
-        console.log('Response from join:', response);
-        return response.json(); // Assuming the response is JSON
-      })
-      .then(data => {
-        console.log('Data from join:', data);
-      })
-      .catch(error => {
-        console.error('Error in join:', error);
-      });
-}
+    /* ------------- HELPER FUNCTIONS ----------- */
+    async function fetchStatus() {
+    try {
+      const { admin_present } =
+        await fetch(`${API_BASE}/status`).then(r => r.json());
 
-      // Check if the current page is being served from localhost or a specific domain
-      // If so, use the local API endpoint; otherwise, use the production endpoint
-      // This function is called when the user clicks the "Leave" button
-      function leave() {
-        console.log('Calling leave function...');
-        fetch(`${API_BASE}/reset`, { method: 'POST' })
-          .then(response => {
-            console.log('Response from leave:', response);
-            return response.json(); // Assuming the response is JSON
-          })
-          .then(data => {
-            console.log('Data from leave:', data);
-          })
-          .catch(error => {
-            console.error('Error in leave:', error);
-          });
-      }
+      updateStatusLabel(admin_present);
+      return admin_present;
+    } catch (err) {
+      console.warn('Status check failed:', err);
+      statusEl.textContent = 'Status: unavailable';
+      statusEl.style.color = '#f00';
+      return false;
+    }
+  }
 
-      function join_prev() {
-        fetch('/api/admin-ping', { method: 'POST' })
-          .then(() => alert("Joined TV mode"));
-      }
+  function updateStatusLabel(isPresent) {
+    statusEl.textContent = isPresent
+      ? 'Admin is PRESENT'
+      : 'Admin is NOT present';
+    statusEl.style.color = isPresent ? '#0c0' : '#c00';
+  }
 
-      function leave_prev() {
-        fetch('/api/admin-reset', { method: 'POST' })
-          .then(() => alert("Left TV mode"));
-      }
-    </script>
+  /* ------------- BUTTON ACTIONS ------------- */
+  function join() {
+    console.log('Calling join()…');
+    fetch(`${API_BASE}/ping`, { method: 'POST' })
+      .then(r => r.json())
+      .then(() => fetchStatus());            // refresh label
+  }
+
+  function leave() {
+    console.log('Calling leave()…');
+    fetch(`${API_BASE}/reset`, { method: 'POST' })
+      .then(r => r.json())
+      .then(() => fetchStatus());            // refresh label
+  }
+
+  /* --------------- AUTO‑REFRESH ------------- */
+  // Poll every 5 s so two admin pages stay in sync
+  setInterval(fetchStatus, 5000);
+
+  // First check as soon as the page loads
+  fetchStatus();
+  </script>
+
   </body>
 </html>
