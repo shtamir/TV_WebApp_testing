@@ -2,6 +2,8 @@
 
 /* --------------- globals ---------------- */
 let lastAdminPresent = null;   // null = unknown, true / false after first poll
+const presenceEl = document.getElementById('presenceIndicator');
+
 
 /* ---------- helper to update UI --------- */
 function updatePresenceIndicator(isPresent) {
@@ -248,7 +250,7 @@ function restoreNormalView() {
 
 function scheduleSafetyReload() {
   setTimeout(() => {
-    if (!adminWasPresent) location.reload();      // file‑level flag
+    if (!lastAdminPresent) location.reload();      // file‑level flag
     else scheduleSafetyReload();                  // push it out again
   }, 6 * 60 * 60 * 1000);   // every 6 h
 }
